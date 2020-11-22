@@ -1,0 +1,43 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Today's new Albums and Singles !</span>
+    <span class="example-spacer"></span>
+      <span class="material-icons large_icon">
+        headset
+        </span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+  <div class="selector">
+    <mat-form-field appearance="fill">
+      <mat-label>Type</mat-label>
+      <mat-select (selectionChange)="onSelectorChange($event)" [value]="'All'">
+        <mat-option value="all">All</mat-option>
+        <mat-option value="album">Albums</mat-option>
+        <mat-option value="single">Single</mat-option>
+      </mat-select>
+    </mat-form-field> 
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start" class="cards">
+    <div *ngFor="let item of filtered">
+      <mat-card class="example-card" fxFlex="1 1 auto">
+        <mat-card-header>      
+          <mat-card-title>{{ item.artists[0].name }}</mat-card-title>
+          <mat-card-subtitle>{{ item.album_type }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="item.images.length > 0 ? item.images[1].url : item.images[0].url">
+        <mat-card-content>
+          <h2>{{ item.name }}</h2>
+          <h4>Total tracks:<span class="total" [matBadge]="item.total_tracks" matBadgeOverlap="false"></span></h4>
+        </mat-card-content>
+        <mat-card-actions> 
+          <button mat-raised-button color="primary" mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+        </mat-card-actions>
+      </mat-card>  
+    </div>
+  </div>
+
+
+
+

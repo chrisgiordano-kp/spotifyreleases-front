@@ -1,0 +1,28 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+  .example-card {
+    max-width: 250px;
+    padding: 2em;
+    margin: 1em;
+  }
+
+  .large_icon {
+      font-size: xx-large;
+  }
+
+  .total {
+      padding-left: 1em;
+  }
+
+  .selector {
+      text-align: end;
+      padding-top: 1em;
+      margin-right: 10em;
+  }
+
+  .cards {
+      width: 90%;
+      margin: auto;
+  }
