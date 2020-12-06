@@ -13,8 +13,9 @@
       <mat-label>Type</mat-label>
       <mat-select (selectionChange)="onSelectorChange($event)" [value]="'All'">
         <mat-option value="all">All</mat-option>
-        <mat-option value="album">Albums</mat-option>
-        <mat-option value="single">Single</mat-option>
+        <mat-option value=0>Single</mat-option>
+        <mat-option value=1>Albums</mat-option>
+        <mat-option value=2>Compilation</mat-option>
       </mat-select>
     </mat-form-field> 
   </div>
@@ -22,13 +23,13 @@
     <div *ngFor="let item of filtered">
       <mat-card class="example-card" fxFlex="1 1 auto">
         <mat-card-header>      
-          <mat-card-title>{{ item.artists[0].name }}</mat-card-title>
-          <mat-card-subtitle>{{ item.album_type }}</mat-card-subtitle>
+          <mat-card-title>{{ item?.artistNames?.length > 0 ? item.artistNames[0]: '' }}</mat-card-title>
+          <mat-card-subtitle>{{ releaseTypeService.getType(item.releaseType) }}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image [src]="item.images.length > 0 ? item.images[1].url : item.images[0].url">
+        <img mat-card-image [src]="item.image300">
         <mat-card-content>
           <h2>{{ item.name }}</h2>
-          <h4>Total tracks:<span class="total" [matBadge]="item.total_tracks" matBadgeOverlap="false"></span></h4>
+          <h4>Total tracks:<span class="total" [matBadge]="item.totalTracks" matBadgeOverlap="false"></span></h4>
         </mat-card-content>
         <mat-card-actions> 
           <button mat-raised-button color="primary" mat-button>LIKE</button>
@@ -37,6 +38,11 @@
       </mat-card>  
     </div>
   </div>
+  <div class="button">
+    <mat-progress-bar *ngIf="isLoading" mode="query"></mat-progress-bar>
+    <button mat-raised-button color="primary" [disabled]="isLoading" (click)="LoadMoreAlbums()">Afficher plus</button>
+  </div>
+
 
 
 

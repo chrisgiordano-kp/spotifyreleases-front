@@ -26,3 +26,8 @@
       width: 90%;
       margin: auto;
   }
+
+  .button {
+      margin-top: 2em;
+      text-align: center;
+  }
