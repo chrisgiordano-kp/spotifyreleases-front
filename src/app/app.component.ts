@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   public asc: string;
   public pageNumber: number;
   public isLoading: boolean;
+  public pageSize: number;
 
 
   constructor(private client: ReleaseClient,
@@ -26,9 +27,15 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     this.filter = "";
-    this.asc = "asc";
+    this.asc = "";
     this.order = "";
     this.pageNumber = 0;    
+    this.items = [];
+
+    if (!this.pageSize){
+      this.pageSize = 10;
+    }
+
     await this.LoadMoreAlbums();
    
   }
@@ -36,7 +43,7 @@ export class AppComponent implements OnInit {
   async LoadMoreAlbums() {
     try{
       this.isLoading = true;
-    const result = await this.client.getReleases(this.filter, this.order, this.pageNumber + 1 , 4, this.asc).toPromise();
+    const result = await this.client.getReleases(this.filter, this.order, this.pageNumber + 1 , this.pageSize, this.asc).toPromise();
 
     if (result.data){
       this.pageNumber = result.pageNumber;  
@@ -56,10 +63,13 @@ export class AppComponent implements OnInit {
 
   this.isLoading = false;
 }
-  
-
 
   onSelectorChange(e){
     this.filtered = e.value == 'all' ? this.items : this.items.filter(i => i.releaseType == e.value);
+  }
+
+  async onPageSizeChange(e) {
+    this.pageSize = e.value.toString();
+    this.ngOnInit();
   }
 }
